@@ -14,7 +14,7 @@ In a nutshell, it rearranges the track names of all your Bandcamp purshases
 to the following format:
 "01_Track_Name___Artist___Album"
 
-Not only does it rearrange the names to amke them more legible, it also
+Not only does it rearrange the names to make them more legible, it also
 removes dreaded whiespace AND keeps track of all the albums it has already
 acted upon.
 
