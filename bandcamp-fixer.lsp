@@ -17,7 +17,7 @@
 ;;; to the following format:
 ;;; 01_Track_Name___Artist___Album
 ;;;
-;;; Not only does it rearrange the names to amke them more legible, it also
+;;; Not only does it rearrange the names to make them more legible, it also
 ;;; removes dreaded whiespace AND keeps track of all the albums it has already
 ;;; acted upon.
 ;;;
@@ -47,12 +47,14 @@
 ;;;
 ;;; An integer representing the number of albums processed.
 ;;;
-;;; NB: this function will also create a file, by default ".bandcamp_fixes" in
+;;; WARNINGS
+;;;
+;;; NB: This function will also create a file, by default ".bandcamp_fixes", in
 ;;; the root director of you music collect. You need this. Do not delete. If you
 ;;; do delete it and then run the function again, who knows what might happen to
 ;;; your track names. You have been warned!
 ;;;
-;;; NB: THis is a work in progress and it may break on certain tracknames if
+;;; NB: This is a work in progress and it may break on certain tracknames if
 ;;; they are quite complex and contain lots of hyphnes and stuff. Why not help me
 ;;; fix it?
 ;;;
@@ -80,6 +82,11 @@
 ;;; Rearrange the default bandcamp track names
 ;;; "Artist Name - Album Name - 01 Track Name.wav" ->
 ;;; "01_Track_Name___Artist_Name___Album_Name.wav"
+;;;
+;;; There are some unexpected hicoughs when the track names havelots of spaces
+;;; and hyphens. I guess I'll have to do some matching / identifying with the
+;;; name of directory the tracks are in which is in the format: 
+;;; "Artist - Album" 
 (defun bandcamp-trackname-rearrange (str &optional (extension ".wav"))
   "Rearrange the filename of a bandcamp track"
   (let* ((trackname (string-trim extension (file-namestring str)))
@@ -120,6 +127,8 @@ keep track of which ones have been changed."
 	(setq ignore (list ignore)))
       (setq ignore (loop for i in ignore
 			 collect
+			 ;; I don't like this line, adding the extra "/" at the
+			 ;; end is clunky. I really should fix it.
 			 (directory-namestring (concatenate 'string dir i "/")))))
     (loop for album in (subdirectories dir)
 	  do
