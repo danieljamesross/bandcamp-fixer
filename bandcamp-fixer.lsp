@@ -24,7 +24,7 @@
 ;;; MAIN FUNCTION: bandcamp-albums-fixer
 ;;;
 ;;; ARGUMENTS
-;;; = the path to your music library
+;;; - the path to your music library
 ;;;
 ;;; OPTIONAL ARGUMENTS
 ;;; keyword arguments
@@ -55,7 +55,7 @@
 ;;; your track names. You have been warned!
 ;;;
 ;;; NB: This is a work in progress and it may break on certain tracknames if
-;;; they are quite complex and contain lots of hyphnes and stuff. Why not help me
+;;; they are quite complex and contain lots of hyphens and stuff. Why not help me
 ;;; fix it?
 ;;;
 ;;; TODO
@@ -66,7 +66,7 @@
 ;;;
 ;;; EXAMPLE
 #|
-(load "/path/to/bandcamp.lsp")
+(load "/path/to/bandcamp-fixer.lsp")
 
 (bandcamp-fixer "/path/to/music/" 
 		       :ignore '("iTunes" "Non-Bandcamp Album" 
@@ -116,7 +116,7 @@
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; This is the main function you will need
 (defun bandcamp-fixer (dir &key (ref ".bandcamp_fixes")
-				    ignore (extension ".wav"))
+			     ignore (extension ".wav"))
   "Rename all the tracks of all the bandcamp albums in your collection and / 
 keep track of which ones have been changed."
   (let ((count 0))
@@ -125,11 +125,12 @@ keep track of which ones have been changed."
     (when ignore
       (unless (listp ignore)
 	(setq ignore (list ignore)))
-      (setq ignore (loop for i in ignore
-			 collect
-			 ;; I don't like this line, adding the extra "/" at the
-			 ;; end is clunky. I really should fix it.
-			 (directory-namestring (concatenate 'string dir i "/")))))
+      (setq ignore
+	    (loop for i in ignore
+		  collect
+		  ;; I don't like this line, adding the extra "/" at the
+		  ;; end is clunky. I really should fix it.
+		  (directory-namestring (concatenate 'string dir i "/")))))
     (loop for album in (subdirectories dir)
 	  do
 	     (with-open-file (nf ref :direction :output
@@ -153,17 +154,17 @@ keep track of which ones have been changed."
 (defun replace-all (string part replacement &key (test #'char=))
   "Returns a new string in which all the occurrences of the part \
 is replaced with replacement."
-    (with-output-to-string (out)
-      (loop with part-length = (length part)
-            for old-pos = 0 then (+ pos part-length)
-            for pos = (search part string
-                              :start2 old-pos
-                              :test test)
-            do (write-string string out
-                             :start old-pos
-                             :end (or pos (length string)))
-            when pos do (write-string replacement out)
-	      while pos)))
+  (with-output-to-string (out)
+    (loop with part-length = (length part)
+	  for old-pos = 0 then (+ pos part-length)
+	  for pos = (search part string
+			    :start2 old-pos
+			    :test test)
+	  do (write-string string out
+			   :start old-pos
+			   :end (or pos (length string)))
+	  when pos do (write-string replacement out)
+	    while pos)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;;; EOF bandcamp.lsp

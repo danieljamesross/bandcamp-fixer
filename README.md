@@ -20,10 +20,10 @@ acted upon.
 
 ---
 
-### MAIN FUNCTION: 
+### MAIN FUNCTION
 ```lisp
 
-bandcamp-albums-fixer
+(bandcamp-albums-fixer)
 ```
 
 ### ARGUMENTS
@@ -77,9 +77,9 @@ fix it?
 ## EXAMPLE
 
 ```lisp
-(load "/path/to/bandcamp.lsp")
+(load "/path/to/bandcamp-fixer.lsp")
 
-(bandcamp-fixer "/path/to/music/" 
+(bandcamp-fixer "/path/to/music/" ; needs this last trailing slash!
 		       :ignore '("iTunes" "Non-Bandcamp Album" 
 				 "Another album I don't want this to apply to")
 		       :extension ".wav"
