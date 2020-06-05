@@ -61,14 +61,17 @@ do delete it and then run the function again, who knows what might happen to
 your track names. You have been warned!
 
 NB: This is a work in progress and it may break on certain tracknames if
-they are quite complex and contain lots of hyphnes and stuff. Why not help me
+they are quite complex and contain lots of hyphens and stuff. Why not help me
 fix it?
+Fri 5 Jun 2020 22:32:33 BST -  Have made steps to fix this, should now work
+better with hyphens in track names.
+
  
 ---
 
 ## TODO
 
- 1. Make the function work on multiple extensions as once
+ 1. Make the function work on multiple extensions at once
  2. Make the renaming bulletproof
  3. Add some kind of memory and a funciton to undo, just in case.
 
