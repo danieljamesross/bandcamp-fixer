@@ -90,11 +90,12 @@
 (defun bandcamp-trackname-rearrange (str &optional (extension ".wav"))
   "Rearrange the filename of a bandcamp track"
   (let* ((trackname (string-trim extension (file-namestring str)))
-	 (str-split (split-string trackname :separator "-"  :max 3))
-	 (artist (string-trim " " (first str-split)))
-	 (album (string-trim " " (second str-split)))
-	 (track (string-trim " " (third str-split)))
+	 (str-split (split-string trackname :separator "-"))
+	 (artist (string-trim " " (first (subseq str-split 0 1))))
+	 (album (string-trim " " (first (subseq str-split 1 2))))
+	 (track (string-trim " " (format nil "~{~A~^-~}" (subseq str-split 2))))
 	 (new-trackname (strcat track "___" artist "___" album)))
+    (print track)
     (concatenate 'string
 		 (replace-all new-trackname " " "_")
 		 extension)))
@@ -117,7 +118,7 @@
 ;;; This is the main function you will need
 (defun bandcamp-fixer (dir &key (ref ".bandcamp_fixes")
 			     ignore (extension ".wav"))
-  "Rename all the tracks of all the bandcamp albums in your collection and / 
+  "Rename all the tracks of all the bandcamp albums in your collection and ~ 
 keep track of which ones have been changed."
   (let ((count 0))
     (setq dir (native-namestring dir)

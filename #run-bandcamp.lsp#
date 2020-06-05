@@ -1,5 +1,5 @@
 (in-package :uiop)
-(load "~/Documents/sc-preload/bandcamp-fixer.lsp")
+(load (native-namestring "~/bandcamp-fixer/bandcamp-fixer.lsp"))
 
 (let ((ignore-list  '("Fiona Apple" "iTunes"
 				 "richard-bolley-20180920"
